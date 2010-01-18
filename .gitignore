@@ -1,0 +1,16 @@
+.DS_Store
+._*
+db/*.db
+db/*.sqlite3
+db/schema.rb
+log/*.log
+log/*.pid
+tmp
+config/database.yml
+config/newrelic.yml
+config/memcached.yml
+config/*.sphinx.conf
+config/settings.yml
+/index
+test/public/system
+vendor/rails
