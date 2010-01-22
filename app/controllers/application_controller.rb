@@ -11,9 +11,28 @@ class ApplicationController < ActionController::Base
 
   before_filter :app_init
   
+
+protected
+
+  # Initializer for specific app to-dos
   def app_init
-    p params
+    # stuff goes here
   end
+
+  # Check which environments we are in
+  def dev?; ENV['RAILS_ENV'] == 'development'; end
+  def prod?; ENV['RAILS_ENV'] == 'production'; end
+  helper_method :dev?, :prod?
+
+
+  # The gag, the error page to display
+  def render_joke(*args)
+    opts = {:action => "error_pages/#{configatron.current_error_page}"}.merge(args.extract_options!)
+    render opts
+  end
+
+  def is_file?(path, file = false); File.exist?( (RAILS_ROOT + '/' + path + (!file.blank? ? "/#{file}" : '')).gsub(/(\?)(.*)$/, '').gsub(/\/\//, '/') ); end
+  helper_method :is_file?
 
 
 private
@@ -54,4 +73,9 @@ private
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
+
+  def record_not_found
+    render :file => File.join(RAILS_ROOT, 'public', '404.html'), :status => 404
+  end
+
 end

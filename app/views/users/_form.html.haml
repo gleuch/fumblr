@@ -4,8 +4,11 @@
   = f.error_messages
 
   %fieldset
-    = f.label :login
+    = f.label :login, 'Username'
     = f.text_field :login
+  %fieldset
+    = f.label :email
+    = f.text_field :email
   %fieldset
     = f.label :password, f.object.new_record? ? nil : "Change password"
     = f.password_field :password

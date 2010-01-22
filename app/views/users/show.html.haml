@@ -1,4 +1,11 @@
 %p
+  %strong Admin
+  = @user.has_role?(:admin) ? 'Yes' : 'No'
+
+%p
+  %strong Roles
+  = h @user.roles_cached
+%p
   %strong Login:
   = h @user.login
 

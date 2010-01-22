@@ -3,7 +3,7 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string    :login,               :null => false                # optional, you can use email instead, or both
       t.string    :email,               :null => false                # optional, you can use login instead, or both
-      t.string    :name,                :null => false
+      t.string    :name
       t.string    :crypted_password,    :null => false                # optional, see below
       t.string    :password_salt,       :null => false                # optional, but highly recommended
       t.string    :persistence_token,   :null => false                # required
@@ -18,6 +18,26 @@ class CreateUsers < ActiveRecord::Migration
       t.datetime  :last_login_at                                      # optional, see Authlogic::Session::MagicColumns
       t.string    :current_login_ip                                   # optional, see Authlogic::Session::MagicColumns
       t.string    :last_login_ip                                      # optional, see Authlogic::Session::MagicColumns
+
+      # Additional columns for invitation process
+      t.datetime  :invite_id
+      t.datetime  :invite_limit
+      t.datetime  :invited_at
+
+      # User activation process
+      t.datetime  :activation_key
+      t.datetime  :activated_at
+
+      # Password reset
+      t.string    :password_reset_key
+      t.datetime  :password_reset_at
+
+      # AASM column
+      t.string    :status
+
+      # Decentralized roles
+      t.text      :roles_cached
+
       t.timestamps
     end
   end
