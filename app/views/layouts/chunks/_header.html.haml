@@ -1,0 +1,15 @@
+#header
+  %ul
+    %li
+      %a{:href => root_path} Home
+    - unless @current_user.blank?
+      %li
+        %a{:href => account_path} Account
+      %li
+        %a{:href => logout_path} Logout
+    - else
+      %li
+        %a{:href => login_path} Login
+      %li
+        %a{:href => signup_path} Sign Up
+        
