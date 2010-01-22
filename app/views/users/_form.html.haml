@@ -1,0 +1,21 @@
+- user = local_assigns[:user] || User.new
+
+- form_for user, :url => (user.new_record? ? signup_path : account_path) do |f|
+  = f.error_messages
+
+  %fieldset
+    = f.label :login
+    = f.text_field :login
+  %fieldset
+    = f.label :password, f.object.new_record? ? nil : "Change password"
+    = f.password_field :password
+  %fieldset
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+
+  - if configatron.enable_recaptcha && f.object.new_record?
+    %fieldset
+      = recaptcha_tags
+
+  %fieldset.buttons
+    = f.submit f.object.new_record? ? (configatron.enable_signups ? "Create" : "Join") : "Update"

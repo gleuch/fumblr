@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
 
+  before_filter :app_init
+  
+  def app_init
+    p params
+  end
+
 
 private
 
@@ -26,7 +32,7 @@ private
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to new_user_session_url
+      redirect_to login_url
       return false
     end
   end

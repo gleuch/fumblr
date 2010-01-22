@@ -11,5 +11,5 @@
       %li
         %a{:href => login_path} Login
       %li
-        %a{:href => signup_path} Sign Up
+        %a{:href => signup_path}= configatron.enable_signups ? 'Sign Up' : 'Get Invite'
         

@@ -1,3 +1,6 @@
 %h1 Welcome!
+%p Some text here.
 
-%p [invite form]
+#register_box
+  %h1= configatron.enable_signups ? 'Sign Up Now!' : 'Get an Invite!'
+  = render :partial => 'users/form'
