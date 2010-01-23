@@ -2,5 +2,9 @@
 %p Some text here.
 
 #register_box
-  %h1= configatron.enable_signups ? 'Sign Up Now!' : 'Get an Invite!'
-  = render :partial => 'users/form'
+  - if configatron.enable_signups
+    %h1 Sign Up Now!
+    = render :partial => 'users/form'
+  - else
+    %h1 Get an Invite!
+    = render :partial => 'invites/form'

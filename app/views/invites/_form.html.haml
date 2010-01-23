@@ -1,0 +1,11 @@
+- invite = local_assigns[:invite] || Invite.new
+
+- form_for invite, :url => invite_path do |f|
+  = f.error_messages
+
+  %fieldset
+    = f.label :email
+    = f.text_field :email
+
+  %fieldset.buttons
+    = f.submit "Request Invite!"
