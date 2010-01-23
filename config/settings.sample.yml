@@ -1,0 +1,29 @@
+development: &local
+
+  site_name:                Site Name # Your site name here
+  
+  twitter_oauth_key:        false
+  twitter_oauth_secret:     false
+
+  recaptcha_key:            false # Your reCAPTCHA key here
+  recaptcha_secret:         false # Your reCAPTCHA secret here
+
+
+  # Enables
+  enable_signups:           false # False allows invite signups
+  enable_recaptcha:         false # Enable for reCAPTCHA spam prevention
+  enable_twitter:           false
+
+  # Error Page Joke
+  current_error_page:       default
+
+production:
+  <<: *local
+
+
+staging:
+  <<: *local
+
+
+test:
+  <<: *local
