@@ -5,4 +5,7 @@
 %body{:id => controller_name, :class => "#{controller_name}_#{action_name}"}
   = render :partial => 'layouts/chunks/header'
   #content
+    - if flash_message?
+      #flash_msgs= flash_messages
+
     = yield 

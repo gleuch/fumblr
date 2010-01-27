@@ -12,8 +12,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource :account, :controller => 'users'
 
   # Invites
-  map.activte_invite '/invite/:invite_id/:id', :controller => 'invites', :action => 'activate'
   map.resource :invite
+  map.activte_invite '/invite/:invite_id/:id', :controller => 'invites', :action => 'activate'
 
   # Home
   map.dashboard '/dashboard', :controller => 'home', :action => 'index'

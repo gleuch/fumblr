@@ -2,6 +2,8 @@ class Invite < ActiveRecord::Base
   belongs_to :sender, :class_name => 'User'
 
   validates_presence_of :email
+  validates_uniqueness_of :email, :message => 'has been used for an invite.'
+
   validate :recipient_is_not_registered
   validate :sender_has_invites, :if => :sender
 

@@ -16,7 +16,8 @@ protected
 
   # Initializer for specific app to-dos
   def app_init
-    # stuff goes here
+    # Display error page
+    render_error_page if session[:error_page]
   end
 
   # Check which environments we are in
@@ -26,16 +27,43 @@ protected
 
 
   # The gag, the error page to display
-  def render_joke(*args)
-    opts = {:action => "error_pages/#{configatron.current_error_page}"}.merge(args.extract_options!)
+  def render_error_page(*args)
+    set_error_page_session
+    eval_error_page_session
+
+    opts = {:template => "error_pages/#{configatron.current_error_page}"}.merge(args.extract_options!)
     render opts
   end
+  def redirect_error_page_back_or_default(to = :back)
+    set_error_page_session
+    redirect_back_or_default(root_path)
+  end
+  def redirect_error_page_to(url)
+    set_error_page_session
+    redirect_to url
+  end
+
 
   def is_file?(path, file = false); File.exist?( (RAILS_ROOT + '/' + path + (!file.blank? ? "/#{file}" : '')).gsub(/(\?)(.*)$/, '').gsub(/\/\//, '/') ); end
   helper_method :is_file?
 
 
 private
+
+  def set_error_page_session
+    session[:error_page] ||= true
+    session[:error_page_count] ||= 0
+  end
+
+  def eval_error_page_session
+    return unless session[:error_page]
+    session[:error_page_count] += 1
+
+    if configatron.error_page_limit && configatron.error_page_limit.to_i != 0 && session[:error_page_count].to_i >= configatron.error_page_limit.to_i
+      session.delete(:error_page)
+      session.delete(:error_page_count)
+    end
+  end    
 
   def current_user_session
     return @current_user_session if defined?(@current_user_session)
@@ -69,8 +97,8 @@ private
     session[:return_to] = request.request_uri
   end
   
-  def redirect_back_or_default(default)
-    redirect_to(session[:return_to] || default)
+  def redirect_back_or_default(default = :back)
+    redirect_to(session[:return_to] || default || root_url)
     session[:return_to] = nil
   end
 

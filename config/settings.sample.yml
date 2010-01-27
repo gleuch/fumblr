@@ -16,6 +16,7 @@ development: &local
 
   # Error Page Joke
   current_error_page:       default
+  error_page_limit:         1 # Number of times person should get error page when clicking/refreshing pages. (0 = persistent through remaining session)
 
 production:
   <<: *local
